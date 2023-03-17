@@ -76,14 +76,14 @@ fn read_key_value(file: &mut File) -> Result<HashMap<String, String>> {
 fn write_key_value(file: &mut File, map: &HashMap<String, String>) -> Result<()> {
     file.set_len(0)?;
     for (key, value) in map.iter() {
-        let num = i32::from_str_radix(key, 10);
+        // let num = i32::from_str_radix(key, 10);
+        file.write_all(format!("{} {}\n", key, value).as_bytes())?;
 
-        if num.is_ok() {
-            file.write_all(&num.unwrap().to_le_bytes())?;
-            file.write_all(format!(" {}\n", value).as_bytes())?;
-        } else {
-            file.write_all(format!("{} {}\n", key, value).as_bytes())?;
-        }
+        // if num.is_ok() {
+        //     file.write_all(&num.unwrap().to_le_bytes())?;
+        //     file.write_all(format!(" {}\n", value).as_bytes())?;
+        // } else {
+        // }
     }
 
     Ok(())
